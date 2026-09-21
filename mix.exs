@@ -22,7 +22,6 @@ defmodule Operational.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.14"},
-      {:gun, "~> 2.4.0"},
       {:grpc, "~> 1.0"},
       {:grpc_server, "~> 1.0"},
       {:protobuf, "~> 0.17"},

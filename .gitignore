@@ -1,4 +1,16 @@
+# Environment files
 .env
 .env.*
 !.env.example
+
+# Elixir build artifacts
+/_build/
+/deps/
+/cover/
+/doc/
+*.ez
+erl_crash.dump
+/.elixir_ls/
+
+# Local files
 .DS_Store
