@@ -11,6 +11,7 @@ COPY mix.exs mix.lock ./
 RUN mix deps.get --only prod && mix deps.compile
 COPY config ./config
 COPY lib ./lib
+COPY priv ./priv
 RUN mix compile && mix release
 FROM debian:trixie-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \

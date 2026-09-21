@@ -22,8 +22,10 @@ defmodule Operational.MixProject do
   defp deps do
     [
       {:ecto_sql, "~> 3.14"},
+      {:geo_postgis, "~> 3.7"},
       {:grpc, "~> 1.0"},
       {:grpc_server, "~> 1.0"},
+      {:jason, "~> 1.4"},
       {:protobuf, "~> 0.17"},
       {:protobuf_generate, "~> 0.2", only: [:dev, :test]},
       {:postgrex, "~> 0.22"}

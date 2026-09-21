@@ -17,6 +17,7 @@ make run
 ```
 
 O `make run` inicia o serviço no host. O Compose inicia apenas o PostgreSQL local.
+O Compose usa `postgis/postgis:16-3.4`; a migration habilita a extensão `postgis` e armazena `Asset.location` como `geography(Point, 4326)`.
 
 ## Protobuf
 

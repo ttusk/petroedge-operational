@@ -1,3 +1,11 @@
+defmodule Petroedge.Operational.V1.GeoPoint do
+  @moduledoc false
+  use Protobuf, protoc_gen_elixir_version: "0.17.0", syntax: :proto3
+
+  field(:latitude, 1, type: :double)
+  field(:longitude, 2, type: :double)
+end
+
 defmodule Petroedge.Operational.V1.Asset do
   @moduledoc false
   use Protobuf, protoc_gen_elixir_version: "0.17.0", syntax: :proto3
@@ -5,7 +13,7 @@ defmodule Petroedge.Operational.V1.Asset do
   field(:id, 1, type: :string)
   field(:name, 2, type: :string)
   field(:type, 3, type: :string)
-  field(:location, 4, type: :string)
+  field(:location, 4, type: Petroedge.Operational.V1.GeoPoint)
   field(:parent_id, 5, type: :string, json_name: "parentId")
 end
 
