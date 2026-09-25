@@ -1,7 +1,6 @@
 defmodule Operational.Asset do
   use Ecto.Schema
   import Ecto.Changeset
-
   @primary_key {:id, :string, autogenerate: false}
 
   schema "assets" do
