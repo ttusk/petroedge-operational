@@ -1,4 +1,4 @@
-.PHONY: build deps proto.generate fmt lint test run up down reset db-up db-down db-reset
+.PHONY: build deps proto.generate fmt lint test run ui-up ui-down up down reset db-up db-down db-reset
 
 COMPOSE ?= docker compose
 
@@ -23,9 +23,17 @@ test:
 run:
 	mix run --no-halt
 
-up: db-up
+ui-up:
+	$(COMPOSE) --profile tools up --build -d grpc-ui
 
-down: db-down
+ui-down:
+	$(COMPOSE) --profile tools stop grpc-ui
+
+up:
+	$(COMPOSE) --profile tools up --build -d operational-postgres operational-migrate operational grpc-ui
+
+down:
+	$(COMPOSE) --profile tools down
 
 reset: db-reset
 

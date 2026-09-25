@@ -24,6 +24,7 @@ defmodule Operational.MixProject do
       {:ecto_sql, "~> 3.14"},
       {:geo_postgis, "~> 3.7"},
       {:grpc, "~> 1.0"},
+      {:grpc_reflection, "~> 0.2"},
       {:grpc_server, "~> 1.0"},
       {:jason, "~> 1.4"},
       {:protobuf, "~> 0.17"},
@@ -35,7 +36,7 @@ defmodule Operational.MixProject do
   defp aliases do
     [
       "proto.generate": [
-        "protobuf.generate --output-path=lib --include-path=proto/petroedge/operational/v1 --plugin=ProtobufGenerate.Plugins.GRPC operational_data.proto",
+        "protobuf.generate --generate-descriptors=true --output-path=lib --include-path=proto/petroedge/operational/v1 --plugin=ProtobufGenerate.Plugins.GRPC operational_data.proto",
         "format"
       ]
     ]

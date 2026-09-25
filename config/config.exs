@@ -1,7 +1,8 @@
 import Config
 
 config :operational,
-  ecto_repos: [Operational.Repo]
+  ecto_repos: [Operational.Repo],
+  start_grpc_reflection: config_env() == :dev
 
 config :operational, Operational.Repo,
   pool_size: 10,

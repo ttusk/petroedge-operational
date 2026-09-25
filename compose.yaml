@@ -16,5 +16,54 @@ services:
       retries: 15
     restart: unless-stopped
 
+  operational-migrate:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-operational}:${POSTGRES_PASSWORD:-operational_dev}@operational-postgres:5432/${POSTGRES_DB:-operational}?sslmode=disable
+    depends_on:
+      operational-postgres:
+        condition: service_healthy
+    command: ["eval", "Operational.Release.migrate()"]
+    restart: "no"
+
+  operational:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-operational}:${POSTGRES_PASSWORD:-operational_dev}@operational-postgres:5432/${POSTGRES_DB:-operational}?sslmode=disable
+      GRPC_PORT: "50051"
+    ports:
+      - "${GRPC_PORT:-50051}:50051"
+    depends_on:
+      operational-postgres:
+        condition: service_healthy
+      operational-migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  grpc-ui:
+    image: fullstorydev/grpcui:v1.5.2
+    profiles: ["tools"]
+    command:
+      - "-bind"
+      - "0.0.0.0"
+      - "-port"
+      - "8080"
+      - "-plaintext"
+      - "-proto"
+      - "/proto/petroedge/operational/v1/operational_data.proto"
+      - "-import-path"
+      - "/proto"
+      - "operational:50051"
+    ports:
+      - "${GRPC_UI_PORT:-8080}:8080"
+    volumes:
+      - ./proto:/proto:ro
+    depends_on:
+      operational:
+        condition: service_started
+    restart: on-failure
+
 volumes:
   operational-postgres-data:

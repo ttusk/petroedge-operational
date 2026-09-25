@@ -7,6 +7,7 @@ defmodule Operational.Application do
       []
       |> maybe_add_repo()
       |> maybe_add_grpc_server()
+      |> maybe_add_grpc_reflection()
 
     opts = [strategy: :one_for_one, name: Operational.Supervisor]
     Supervisor.start_link(children, opts)
@@ -15,6 +16,14 @@ defmodule Operational.Application do
   defp maybe_add_repo(children) do
     if Application.get_env(:operational, :start_repo, true) do
       [Operational.Repo | children]
+    else
+      children
+    end
+  end
+
+  defp maybe_add_grpc_reflection(children) do
+    if Application.get_env(:operational, :start_grpc_reflection, false) do
+      children ++ [GrpcReflection]
     else
       children
     end

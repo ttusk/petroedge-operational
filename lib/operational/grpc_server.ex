@@ -8,13 +8,15 @@ defmodule Operational.GRPCServer do
     GetAssetRequest,
     GetAssetResponse,
     RegisterAssetRequest,
-    RegisterAssetResponse
+    RegisterAssetResponse,
+    IngestTelemetryRequest,
+    IngestTelemetryResponse
   }
 
-  alias Operational.Asset
-  alias Operational.Assets
+  alias Operational.{Asset, Assets, Telemetries}
   alias Petroedge.Operational.V1.GeoPoint
   alias Petroedge.Operational.V1.Asset, as: ProtoAsset
+  alias Petroedge.Operational.V1.TelemetryEnvelope, as: ProtoTelemetry
 
   defp proto_asset_to_attrs(%ProtoAsset{} = asset),
     do: %{
@@ -31,8 +33,8 @@ defmodule Operational.GRPCServer do
       }
     }
 
-  defp asset_to_proto(%Asset{location: %Point{coordinates: {longitude, latitude}}} = asset) do
-    %ProtoAsset{
+  defp asset_to_proto(%Asset{location: %Point{coordinates: {longitude, latitude}}} = asset),
+    do: %ProtoAsset{
       id: asset.id,
       name: asset.name,
       type: asset.type,
@@ -42,7 +44,6 @@ defmodule Operational.GRPCServer do
         longitude: longitude
       }
     }
-  end
 
   def register_asset(request, materializer) do
     request
@@ -77,8 +78,32 @@ defmodule Operational.GRPCServer do
     |> GRPC.Stream.run()
   end
 
-  def ingest_telemetry(_request, _stream) do
-    unimplemented("IngestTelemetry")
+  defp proto_telemetry_to_attrs(%ProtoTelemetry{} = telemetry) do
+    %{
+      asset_id: telemetry.asset_id,
+      observed_at: timestamp_to_datetime(telemetry.observed_at),
+      measurements: telemetry.measurements,
+      source: telemetry.source
+    }
+  end
+
+  defp timestamp_to_datetime(nil), do: nil
+  defp timestamp_to_datetime(timestamp), do: Google.Protobuf.to_datetime(timestamp)
+
+  def ingest_telemetry(requests, _) do
+    accepted =
+      Enum.reduce(requests, 0, fn
+        %IngestTelemetryRequest{telemetry: nil}, count ->
+          count
+
+        %IngestTelemetryRequest{telemetry: telemetry}, count ->
+          case Telemetries.create(proto_telemetry_to_attrs(telemetry)) do
+            {:ok, _event} -> count + 1
+            {:error, _changeset} -> count
+          end
+      end)
+
+    %IngestTelemetryResponse{accepted: accepted}
   end
 
   def stream_telemetry(_request, _stream) do
