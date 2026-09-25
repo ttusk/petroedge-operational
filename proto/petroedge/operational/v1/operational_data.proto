@@ -7,6 +7,8 @@ import "google/protobuf/timestamp.proto";
 service OperationalDataService {
   rpc RegisterAsset(RegisterAssetRequest) returns (RegisterAssetResponse);
   rpc GetAsset(GetAssetRequest) returns (GetAssetResponse);
+  // Invalid events are rejected individually and reported in the response.
+  // Storage failures terminate the RPC with UNAVAILABLE or INTERNAL.
   rpc IngestTelemetry(stream IngestTelemetryRequest) returns (IngestTelemetryResponse);
   rpc StreamTelemetry(StreamTelemetryRequest) returns (stream StreamTelemetryResponse);
 }
@@ -49,10 +51,26 @@ message TelemetryEnvelope {
   google.protobuf.Timestamp observed_at = 2;
   map<string, double> measurements = 3;
   string source = 4;
+  // Stable client-provided identifier. Clients MUST set it when retries are possible.
+  string event_id = 5;
 }
 
 message IngestTelemetryResponse {
+  // Number of new events inserted during this request.
   uint32 accepted = 1;
+  // Number of events rejected as invalid, already processed, or conflicting.
+  uint32 rejected = 2;
+  // One entry for every rejected event, ordered by zero-based stream index.
+  repeated TelemetryError errors = 3;
+}
+
+message TelemetryError {
+  // Zero-based position of the rejected request in the client stream.
+  uint32 index = 1;
+  // Stable machine-readable code. Clients SHOULD branch on this field.
+  string code = 2;
+  // Safe human-readable detail; never contains database or telemetry payload data.
+  string message = 3;
 }
 
 message StreamTelemetryRequest {

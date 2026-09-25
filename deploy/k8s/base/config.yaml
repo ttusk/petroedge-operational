@@ -6,11 +6,3 @@ metadata:
 data:
   GRPC_PORT: "50051"
   POOL_SIZE: "10"
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: operational-secret
-  namespace: petroedge
-stringData:
-  DATABASE_URL: postgres://operational:operational_dev@operational-postgres:5432/operational?sslmode=disable

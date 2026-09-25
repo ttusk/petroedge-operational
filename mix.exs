@@ -24,6 +24,7 @@ defmodule Operational.MixProject do
       {:ecto_sql, "~> 3.14"},
       {:geo_postgis, "~> 3.7"},
       {:grpc, "~> 1.0"},
+      {:gun, "~> 2.4"},
       {:grpc_reflection, "~> 0.2"},
       {:grpc_server, "~> 1.0"},
       {:jason, "~> 1.4"},

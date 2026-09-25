@@ -18,13 +18,14 @@ lint:
 	mix format --check-formatted
 
 test:
-	mix test
+	MIX_ENV=test mix ecto.migrate
+	MIX_ENV=test mix test
 
 ci:
 	mix format --check-formatted
 	mix compile
-	mix test
-
+	MIX_ENV=test mix ecto.migrate
+	MIX_ENV=test mix test
 run:
 	mix run --no-halt
 

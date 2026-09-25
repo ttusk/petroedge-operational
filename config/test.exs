@@ -1,5 +1,5 @@
 import Config
 
 config :operational,
-  start_repo: false,
+  start_repo: true,
   start_grpc: false

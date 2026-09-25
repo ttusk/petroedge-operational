@@ -501,6 +501,21 @@ defmodule Petroedge.Operational.V1.TelemetryEnvelope do
           proto3_optional: nil,
           __unknown_fields__: [],
           __protobuf__: true
+        },
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "event_id",
+          extendee: nil,
+          number: 5,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_STRING,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "eventId",
+          proto3_optional: nil,
+          __unknown_fields__: [],
+          __protobuf__: true
         }
       ],
       nested_type: [
@@ -583,6 +598,7 @@ defmodule Petroedge.Operational.V1.TelemetryEnvelope do
   )
 
   field(:source, 4, type: :string)
+  field(:event_id, 5, type: :string, json_name: "eventId")
 end
 
 defmodule Petroedge.Operational.V1.IngestTelemetryResponse do
@@ -608,6 +624,36 @@ defmodule Petroedge.Operational.V1.IngestTelemetryResponse do
           proto3_optional: nil,
           __unknown_fields__: [],
           __protobuf__: true
+        },
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "rejected",
+          extendee: nil,
+          number: 2,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_UINT32,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "rejected",
+          proto3_optional: nil,
+          __unknown_fields__: [],
+          __protobuf__: true
+        },
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "errors",
+          extendee: nil,
+          number: 3,
+          label: :LABEL_REPEATED,
+          type: :TYPE_MESSAGE,
+          type_name: ".petroedge.operational.v1.TelemetryError",
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "errors",
+          proto3_optional: nil,
+          __unknown_fields__: [],
+          __protobuf__: true
         }
       ],
       nested_type: [],
@@ -624,6 +670,81 @@ defmodule Petroedge.Operational.V1.IngestTelemetryResponse do
   end
 
   field(:accepted, 1, type: :uint32)
+  field(:rejected, 2, type: :uint32)
+  field(:errors, 3, repeated: true, type: Petroedge.Operational.V1.TelemetryError)
+end
+
+defmodule Petroedge.Operational.V1.TelemetryError do
+  @moduledoc false
+  use Protobuf, protoc_gen_elixir_version: "0.17.0", syntax: :proto3
+
+  def descriptor do
+    # credo:disable-for-next-line
+    %Google.Protobuf.DescriptorProto{
+      name: "TelemetryError",
+      field: [
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "index",
+          extendee: nil,
+          number: 1,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_UINT32,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "index",
+          proto3_optional: nil,
+          __unknown_fields__: [],
+          __protobuf__: true
+        },
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "code",
+          extendee: nil,
+          number: 2,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_STRING,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "code",
+          proto3_optional: nil,
+          __unknown_fields__: [],
+          __protobuf__: true
+        },
+        %Google.Protobuf.FieldDescriptorProto{
+          name: "message",
+          extendee: nil,
+          number: 3,
+          label: :LABEL_OPTIONAL,
+          type: :TYPE_STRING,
+          type_name: nil,
+          default_value: nil,
+          options: nil,
+          oneof_index: nil,
+          json_name: "message",
+          proto3_optional: nil,
+          __unknown_fields__: [],
+          __protobuf__: true
+        }
+      ],
+      nested_type: [],
+      enum_type: [],
+      extension_range: [],
+      extension: [],
+      options: nil,
+      oneof_decl: [],
+      reserved_range: [],
+      reserved_name: [],
+      __unknown_fields__: [],
+      __protobuf__: true
+    }
+  end
+
+  field(:index, 1, type: :uint32)
+  field(:code, 2, type: :string)
+  field(:message, 3, type: :string)
 end
 
 defmodule Petroedge.Operational.V1.StreamTelemetryRequest do
@@ -1085,6 +1206,21 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
               proto3_optional: nil,
               __unknown_fields__: [],
               __protobuf__: true
+            },
+            %Google.Protobuf.FieldDescriptorProto{
+              name: "event_id",
+              extendee: nil,
+              number: 5,
+              label: :LABEL_OPTIONAL,
+              type: :TYPE_STRING,
+              type_name: nil,
+              default_value: nil,
+              options: nil,
+              oneof_index: nil,
+              json_name: "eventId",
+              proto3_optional: nil,
+              __unknown_fields__: [],
+              __protobuf__: true
             }
           ],
           nested_type: [
@@ -1169,6 +1305,96 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
               options: nil,
               oneof_index: nil,
               json_name: "accepted",
+              proto3_optional: nil,
+              __unknown_fields__: [],
+              __protobuf__: true
+            },
+            %Google.Protobuf.FieldDescriptorProto{
+              name: "rejected",
+              extendee: nil,
+              number: 2,
+              label: :LABEL_OPTIONAL,
+              type: :TYPE_UINT32,
+              type_name: nil,
+              default_value: nil,
+              options: nil,
+              oneof_index: nil,
+              json_name: "rejected",
+              proto3_optional: nil,
+              __unknown_fields__: [],
+              __protobuf__: true
+            },
+            %Google.Protobuf.FieldDescriptorProto{
+              name: "errors",
+              extendee: nil,
+              number: 3,
+              label: :LABEL_REPEATED,
+              type: :TYPE_MESSAGE,
+              type_name: ".petroedge.operational.v1.TelemetryError",
+              default_value: nil,
+              options: nil,
+              oneof_index: nil,
+              json_name: "errors",
+              proto3_optional: nil,
+              __unknown_fields__: [],
+              __protobuf__: true
+            }
+          ],
+          nested_type: [],
+          enum_type: [],
+          extension_range: [],
+          extension: [],
+          options: nil,
+          oneof_decl: [],
+          reserved_range: [],
+          reserved_name: [],
+          __unknown_fields__: [],
+          __protobuf__: true
+        },
+        %Google.Protobuf.DescriptorProto{
+          name: "TelemetryError",
+          field: [
+            %Google.Protobuf.FieldDescriptorProto{
+              name: "index",
+              extendee: nil,
+              number: 1,
+              label: :LABEL_OPTIONAL,
+              type: :TYPE_UINT32,
+              type_name: nil,
+              default_value: nil,
+              options: nil,
+              oneof_index: nil,
+              json_name: "index",
+              proto3_optional: nil,
+              __unknown_fields__: [],
+              __protobuf__: true
+            },
+            %Google.Protobuf.FieldDescriptorProto{
+              name: "code",
+              extendee: nil,
+              number: 2,
+              label: :LABEL_OPTIONAL,
+              type: :TYPE_STRING,
+              type_name: nil,
+              default_value: nil,
+              options: nil,
+              oneof_index: nil,
+              json_name: "code",
+              proto3_optional: nil,
+              __unknown_fields__: [],
+              __protobuf__: true
+            },
+            %Google.Protobuf.FieldDescriptorProto{
+              name: "message",
+              extendee: nil,
+              number: 3,
+              label: :LABEL_OPTIONAL,
+              type: :TYPE_STRING,
+              type_name: nil,
+              default_value: nil,
+              options: nil,
+              oneof_index: nil,
+              json_name: "message",
               proto3_optional: nil,
               __unknown_fields__: [],
               __protobuf__: true
@@ -1318,7 +1544,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
         location: [
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [],
-            span: [0, 0, 64, 1],
+            span: [0, 0, 82, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1354,7 +1580,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0],
-            span: [6, 0, 11, 1],
+            span: [6, 0, 13, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1444,8 +1670,9 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 2],
-            span: [9, 2, 87],
-            leading_comments: nil,
+            span: [11, 2, 87],
+            leading_comments:
+              " Invalid events are rejected individually and reported in the response.\n Storage failures terminate the RPC with UNAVAILABLE or INTERNAL.\n",
             trailing_comments: nil,
             leading_detached_comments: [],
             __unknown_fields__: [],
@@ -1453,7 +1680,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 2, 1],
-            span: [9, 6, 21],
+            span: [11, 6, 21],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1462,7 +1689,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 2, 5],
-            span: [9, 22, 28],
+            span: [11, 22, 28],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1471,7 +1698,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 2, 2],
-            span: [9, 29, 51],
+            span: [11, 29, 51],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1480,7 +1707,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 2, 3],
-            span: ~c"\t>U",
+            span: ~c"\v>U",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1489,7 +1716,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 3],
-            span: [10, 2, 87],
+            span: [12, 2, 87],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1498,7 +1725,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 3, 1],
-            span: [10, 6, 21],
+            span: [12, 6, 21],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1507,7 +1734,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 3, 2],
-            span: [10, 22, 44],
+            span: [12, 22, 44],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1516,7 +1743,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 3, 6],
-            span: ~c"\n7=",
+            span: ~c"\f7=",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1525,7 +1752,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [6, 0, 2, 3, 3],
-            span: ~c"\n>U",
+            span: ~c"\f>U",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1534,7 +1761,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0],
-            span: [13, 0, 16, 1],
+            span: [15, 0, 18, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1543,7 +1770,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 1],
-            span: [13, 8, 16],
+            span: [15, 8, 16],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1552,7 +1779,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 2, 0],
-            span: [14, 2, 22],
+            span: [16, 2, 22],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1561,7 +1788,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 2, 0, 5],
-            span: [14, 2, 8],
+            span: [16, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1570,7 +1797,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 2, 0, 1],
-            span: [14, 9, 17],
+            span: [16, 9, 17],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1579,7 +1806,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 2, 0, 3],
-            span: [14, 20, 21],
+            span: [16, 20, 21],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1588,7 +1815,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 2, 1],
-            span: [15, 2, 23],
+            span: [17, 2, 23],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1597,7 +1824,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 2, 1, 5],
-            span: [15, 2, 8],
+            span: [17, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1606,7 +1833,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 2, 1, 1],
-            span: [15, 9, 18],
+            span: [17, 9, 18],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1615,7 +1842,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 0, 2, 1, 3],
-            span: [15, 21, 22],
+            span: [17, 21, 22],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1624,7 +1851,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 1],
-            span: [18, 0, 24, 1],
+            span: [20, 0, 26, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1633,7 +1860,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 1, 1],
-            span: [18, 8, 13],
+            span: [20, 8, 13],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1642,7 +1869,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 1, 2, 0],
-            span: [19, 2, 16],
+            span: [21, 2, 16],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1651,78 +1878,6 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 1, 2, 0, 5],
-            span: [19, 2, 8],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 0, 1],
-            span: [19, 9, 11],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 0, 3],
-            span: [19, 14, 15],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 1],
-            span: [20, 2, 18],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 1, 5],
-            span: [20, 2, 8],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 1, 1],
-            span: [20, 9, 13],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 1, 3],
-            span: [20, 16, 17],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 2],
-            span: [21, 2, 18],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 2, 5],
             span: [21, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
@@ -1731,8 +1886,8 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 2, 1],
-            span: [21, 9, 13],
+            path: [4, 1, 2, 0, 1],
+            span: [21, 9, 11],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1740,8 +1895,8 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 2, 3],
-            span: [21, 16, 17],
+            path: [4, 1, 2, 0, 3],
+            span: [21, 14, 15],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1749,8 +1904,8 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 3],
-            span: [22, 2, 24],
+            path: [4, 1, 2, 1],
+            span: [22, 2, 18],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1758,8 +1913,8 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 3, 6],
-            span: [22, 2, 10],
+            path: [4, 1, 2, 1, 5],
+            span: [22, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1767,8 +1922,8 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 3, 1],
-            span: [22, 11, 19],
+            path: [4, 1, 2, 1, 1],
+            span: [22, 9, 13],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1776,8 +1931,8 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 3, 3],
-            span: [22, 22, 23],
+            path: [4, 1, 2, 1, 3],
+            span: [22, 16, 17],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1785,8 +1940,8 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 4],
-            span: [23, 2, 23],
+            path: [4, 1, 2, 2],
+            span: [23, 2, 18],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1794,7 +1949,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 1, 2, 4, 5],
+            path: [4, 1, 2, 2, 5],
             span: [23, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
@@ -1803,8 +1958,80 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 1, 2, 2, 1],
+            span: [23, 9, 13],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 1, 2, 2, 3],
+            span: [23, 16, 17],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 1, 2, 3],
+            span: [24, 2, 24],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 1, 2, 3, 6],
+            span: [24, 2, 10],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 1, 2, 3, 1],
+            span: [24, 11, 19],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 1, 2, 3, 3],
+            span: [24, 22, 23],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 1, 2, 4],
+            span: [25, 2, 23],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 1, 2, 4, 5],
+            span: [25, 2, 8],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 1, 2, 4, 1],
-            span: [23, 9, 18],
+            span: [25, 9, 18],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1813,7 +2040,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 1, 2, 4, 3],
-            span: [23, 21, 22],
+            span: [25, 21, 22],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1822,7 +2049,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 2],
-            span: [26, 0, 28, 1],
+            span: [28, 0, 30, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1831,7 +2058,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 2, 1],
-            span: [26, 8, 28],
+            span: [28, 8, 28],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1840,7 +2067,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 2, 2, 0],
-            span: [27, 2, 18],
+            span: [29, 2, 18],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1849,7 +2076,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 2, 2, 0, 6],
-            span: [27, 2, 7],
+            span: [29, 2, 7],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1858,7 +2085,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 2, 2, 0, 1],
-            span: ~c"\e\b\r",
+            span: [29, 8, 13],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1867,7 +2094,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 2, 2, 0, 3],
-            span: [27, 16, 17],
+            span: [29, 16, 17],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1876,7 +2103,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 3],
-            span: [30, 0, 32, 1],
+            span: [32, 0, 34, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1885,7 +2112,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 3, 1],
-            span: [30, 8, 29],
+            span: [32, 8, 29],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1894,7 +2121,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 3, 2, 0],
-            span: [31, 2, 18],
+            span: [33, 2, 18],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1903,7 +2130,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 3, 2, 0, 6],
-            span: [31, 2, 7],
+            span: [33, 2, 7],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1912,7 +2139,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 3, 2, 0, 1],
-            span: [31, 8, 13],
+            span: ~c"!\b\r",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1921,7 +2148,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 3, 2, 0, 3],
-            span: [31, 16, 17],
+            span: [33, 16, 17],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1930,7 +2157,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 4],
-            span: [34, 0, 36, 1],
+            span: [36, 0, 38, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1939,7 +2166,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 4, 1],
-            span: [34, 8, 23],
+            span: [36, 8, 23],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1948,7 +2175,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 4, 2, 0],
-            span: [35, 2, 16],
+            span: [37, 2, 16],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1957,7 +2184,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 4, 2, 0, 5],
-            span: [35, 2, 8],
+            span: [37, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1966,7 +2193,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 4, 2, 0, 1],
-            span: ~c"#\t\v",
+            span: ~c"%\t\v",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1975,7 +2202,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 4, 2, 0, 3],
-            span: [35, 14, 15],
+            span: [37, 14, 15],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1984,7 +2211,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 5],
-            span: [38, 0, 40, 1],
+            span: [40, 0, 42, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -1993,7 +2220,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 5, 1],
-            span: [38, 8, 24],
+            span: [40, 8, 24],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2002,7 +2229,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 5, 2, 0],
-            span: [39, 2, 18],
+            span: [41, 2, 18],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2011,7 +2238,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 5, 2, 0, 6],
-            span: [39, 2, 7],
+            span: [41, 2, 7],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2020,7 +2247,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 5, 2, 0, 1],
-            span: ~c"'\b\r",
+            span: ~c")\b\r",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2029,7 +2256,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 5, 2, 0, 3],
-            span: [39, 16, 17],
+            span: [41, 16, 17],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2038,7 +2265,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 6],
-            span: [42, 0, 44, 1],
+            span: [44, 0, 46, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2047,7 +2274,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 6, 1],
-            span: [42, 8, 30],
+            span: [44, 8, 30],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2056,7 +2283,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 6, 2, 0],
-            span: [43, 2, 34],
+            span: [45, 2, 34],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2065,7 +2292,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 6, 2, 0, 6],
-            span: [43, 2, 19],
+            span: [45, 2, 19],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2074,7 +2301,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 6, 2, 0, 1],
-            span: [43, 20, 29],
+            span: [45, 20, 29],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2083,7 +2310,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 6, 2, 0, 3],
-            span: ~c"+ !",
+            span: ~c"- !",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2092,7 +2319,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7],
-            span: [46, 0, 51, 1],
+            span: [48, 0, 55, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2101,7 +2328,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 1],
-            span: [46, 8, 25],
+            span: [48, 8, 25],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2110,7 +2337,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 0],
-            span: [47, 2, 22],
+            span: [49, 2, 22],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2119,7 +2346,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 0, 5],
-            span: [47, 2, 8],
+            span: [49, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2128,7 +2355,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 0, 1],
-            span: [47, 9, 17],
+            span: [49, 9, 17],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2137,7 +2364,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 0, 3],
-            span: [47, 20, 21],
+            span: [49, 20, 21],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2146,7 +2373,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 1],
-            span: [48, 2, 44],
+            span: [50, 2, 44],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2155,7 +2382,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 1, 6],
-            span: [48, 2, 27],
+            span: [50, 2, 27],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2164,7 +2391,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 1, 1],
-            span: [48, 28, 39],
+            span: [50, 28, 39],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2173,7 +2400,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 1, 3],
-            span: ~c"0*+",
+            span: ~c"2*+",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2182,7 +2409,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 2],
-            span: [49, 2, 39],
+            span: [51, 2, 39],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2191,7 +2418,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 2, 6],
-            span: [49, 2, 21],
+            span: [51, 2, 21],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2200,7 +2427,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 2, 1],
-            span: [49, 22, 34],
+            span: [51, 22, 34],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2209,7 +2436,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 2, 3],
-            span: ~c"1%&",
+            span: ~c"3%&",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2218,7 +2445,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 3],
-            span: [50, 2, 20],
+            span: [52, 2, 20],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2227,7 +2454,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 3, 5],
-            span: [50, 2, 8],
+            span: [52, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2236,7 +2463,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 3, 1],
-            span: [50, 9, 15],
+            span: [52, 9, 15],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2245,7 +2472,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 7, 2, 3, 3],
-            span: [50, 18, 19],
+            span: [52, 18, 19],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2253,34 +2480,17 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 8],
-            span: [53, 0, 55, 1],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 8, 1],
-            span: [53, 8, 31],
-            leading_comments: nil,
-            trailing_comments: nil,
-            leading_detached_comments: [],
-            __unknown_fields__: [],
-            __protobuf__: true
-          },
-          %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 8, 2, 0],
+            path: [4, 7, 2, 4],
             span: [54, 2, 22],
-            leading_comments: nil,
+            leading_comments:
+              " Stable client-provided identifier. Clients MUST set it when retries are possible.\n",
             trailing_comments: nil,
             leading_detached_comments: [],
             __unknown_fields__: [],
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 8, 2, 0, 5],
+            path: [4, 7, 2, 4, 5],
             span: [54, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
@@ -2289,7 +2499,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 8, 2, 0, 1],
+            path: [4, 7, 2, 4, 1],
             span: [54, 9, 17],
             leading_comments: nil,
             trailing_comments: nil,
@@ -2298,7 +2508,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 8, 2, 0, 3],
+            path: [4, 7, 2, 4, 3],
             span: [54, 20, 21],
             leading_comments: nil,
             trailing_comments: nil,
@@ -2307,8 +2517,145 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8],
+            span: [57, 0, 64, 1],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 1],
+            span: [57, 8, 31],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 0],
+            span: [59, 2, 22],
+            leading_comments: " Number of new events inserted during this request.\n",
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 0, 5],
+            span: [59, 2, 8],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 0, 1],
+            span: [59, 9, 17],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 0, 3],
+            span: [59, 20, 21],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 1],
+            span: [61, 2, 22],
+            leading_comments:
+              " Number of events rejected as invalid, already processed, or conflicting.\n",
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 1, 5],
+            span: [61, 2, 8],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 1, 1],
+            span: [61, 9, 17],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 1, 3],
+            span: [61, 20, 21],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 2],
+            span: [63, 2, 37],
+            leading_comments:
+              " One entry for every rejected event, ordered by zero-based stream index.\n",
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 2, 4],
+            span: [63, 2, 10],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 2, 6],
+            span: [63, 11, 25],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 2, 1],
+            span: [63, 26, 32],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 8, 2, 2, 3],
+            span: ~c"?#$",
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9],
-            span: [57, 0, 60, 1],
+            span: [66, 0, 73, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2317,7 +2664,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9, 1],
-            span: [57, 8, 30],
+            span: [66, 8, 22],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2326,8 +2673,9 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9, 2, 0],
-            span: [58, 2, 22],
-            leading_comments: nil,
+            span: [68, 2, 19],
+            leading_comments:
+              " Zero-based position of the rejected request in the client stream.\n",
             trailing_comments: nil,
             leading_detached_comments: [],
             __unknown_fields__: [],
@@ -2335,7 +2683,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9, 2, 0, 5],
-            span: [58, 2, 8],
+            span: [68, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2344,7 +2692,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9, 2, 0, 1],
-            span: [58, 9, 17],
+            span: [68, 9, 14],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2353,7 +2701,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9, 2, 0, 3],
-            span: [58, 20, 21],
+            span: [68, 17, 18],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2362,16 +2710,17 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9, 2, 1],
-            span: [59, 2, 37],
-            leading_comments: nil,
+            span: [70, 2, 18],
+            leading_comments:
+              " Stable machine-readable code. Clients SHOULD branch on this field.\n",
             trailing_comments: nil,
             leading_detached_comments: [],
             __unknown_fields__: [],
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 9, 2, 1, 6],
-            span: [59, 2, 27],
+            path: [4, 9, 2, 1, 5],
+            span: [70, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2380,7 +2729,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9, 2, 1, 1],
-            span: [59, 28, 32],
+            span: ~c"F\t\r",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2389,7 +2738,44 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 9, 2, 1, 3],
-            span: ~c";#$",
+            span: [70, 16, 17],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 9, 2, 2],
+            span: [72, 2, 21],
+            leading_comments:
+              " Safe human-readable detail; never contains database or telemetry payload data.\n",
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 9, 2, 2, 5],
+            span: [72, 2, 8],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 9, 2, 2, 1],
+            span: [72, 9, 16],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 9, 2, 2, 3],
+            span: [72, 19, 20],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2398,7 +2784,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 10],
-            span: [62, 0, 64, 1],
+            span: [75, 0, 78, 1],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2407,7 +2793,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 10, 1],
-            span: [62, 8, 31],
+            span: [75, 8, 30],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2416,7 +2802,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 10, 2, 0],
-            span: [63, 2, 34],
+            span: [76, 2, 22],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2424,8 +2810,8 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
             __protobuf__: true
           },
           %Google.Protobuf.SourceCodeInfo.Location{
-            path: [4, 10, 2, 0, 6],
-            span: [63, 2, 19],
+            path: [4, 10, 2, 0, 5],
+            span: [76, 2, 8],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2434,7 +2820,7 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 10, 2, 0, 1],
-            span: [63, 20, 29],
+            span: [76, 9, 17],
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],
@@ -2443,7 +2829,97 @@ defmodule Petroedge.Operational.V1.OperationalDataService.Service do
           },
           %Google.Protobuf.SourceCodeInfo.Location{
             path: [4, 10, 2, 0, 3],
-            span: ~c"? !",
+            span: [76, 20, 21],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 10, 2, 1],
+            span: [77, 2, 37],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 10, 2, 1, 6],
+            span: [77, 2, 27],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 10, 2, 1, 1],
+            span: [77, 28, 32],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 10, 2, 1, 3],
+            span: ~c"M#$",
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 11],
+            span: [80, 0, 82, 1],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 11, 1],
+            span: [80, 8, 31],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 11, 2, 0],
+            span: [81, 2, 34],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 11, 2, 0, 6],
+            span: [81, 2, 19],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 11, 2, 0, 1],
+            span: [81, 20, 29],
+            leading_comments: nil,
+            trailing_comments: nil,
+            leading_detached_comments: [],
+            __unknown_fields__: [],
+            __protobuf__: true
+          },
+          %Google.Protobuf.SourceCodeInfo.Location{
+            path: [4, 11, 2, 0, 3],
+            span: ~c"Q !",
             leading_comments: nil,
             trailing_comments: nil,
             leading_detached_comments: [],

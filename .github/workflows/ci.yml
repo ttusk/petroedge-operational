@@ -15,6 +15,23 @@ jobs:
   quality:
     name: Elixir quality
     runs-on: ubuntu-24.04
+    env:
+      MIX_ENV: test
+      DATABASE_URL: postgres://operational:operational_dev@localhost:5432/operational?sslmode=disable
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: operational
+          POSTGRES_USER: operational
+          POSTGRES_PASSWORD: operational_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U operational -d operational"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,6 +62,8 @@ jobs:
 
       - name: Fetch dependencies
         run: mix deps.get
+      - name: Run database migrations
+        run: mix ecto.migrate
 
       - name: Run quality checks
         run: make ci
@@ -59,6 +78,11 @@ jobs:
 
       - name: Prepare environment
         run: cp .env.example .env
+
+      - name: Validate Kubernetes overlays
+        run: |
+          kubectl kustomize deploy/k8s/demo >/dev/null
+          kubectl kustomize deploy/k8s/prod >/dev/null
 
       - name: Validate Compose
         run: docker compose --profile tools config --quiet
