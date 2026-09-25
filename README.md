@@ -21,6 +21,14 @@ Para apagar o banco:
 make reset
 ```
 
+> **Obs.:** comandos individuais:
+>
+> - PostgreSQL: `make db-up` / `make db-down`
+> - API no host: `make run`
+> - UI: `make ui-up` / `make ui-down`
+> - Stack completo: `make up` / `make down`
+>
+
 ## Consumir a API
 
 - gRPC: `localhost:50051`
