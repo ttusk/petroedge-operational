@@ -1,4 +1,4 @@
-.PHONY: build deps proto.generate fmt lint test run ui-up ui-down up down reset db-up db-down db-reset
+.PHONY: build deps proto.generate fmt lint test ci run ui-up ui-down up down reset db-up db-down db-reset
 
 COMPOSE ?= docker compose
 
@@ -18,6 +18,11 @@ lint:
 	mix format --check-formatted
 
 test:
+	mix test
+
+ci:
+	mix format --check-formatted
+	mix compile
 	mix test
 
 run:
